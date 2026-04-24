@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>قصيدتك الخاصة</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #000000, #1a1a1a);
+  color: #d4af37;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Cairo", sans-serif;
+  text-align: center;
+}
+
+.container {
+  max-width: 700px;
+  padding: 40px;
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 20px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 30px rgba(212,175,55,0.2);
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.poem {
+  font-size: 26px;
+  line-height: 2;
+}
+
+.btn {
+  margin-top: 30px;
+  padding: 10px 20px;
+  border: none;
+  background: #d4af37;
+  color: black;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <div class="title">قصيدتك الخاصة ✨</div>
+  <div class="poem" id="poem"></div>
+  <button class="btn" onclick="getPoem()">قصيدة جديدة</button>
+</div>
+
+<script>
+
+const poems = [
+"أحبك حب لو تحبينه، كان الكون ضحك من عيونه",
+"مو كل من قال أحبك صدگ، بعضهم حچي بس بدون روح",
+"عفت النوم من شفت طيفك، وصرت أحلم واني صاحي",
+"يا ورد شلونك اليوم، تدري بغيابك يضوج الكون؟",
+"أشتاقلك مو شوية، اشتاقلك قد عمر الحزن",
+"كلبي عليك انكتب، وانته صرت العمر كله",
+"ما بين عينك وعيوني ضاع الكلام",
+"إنت مو بشر... إنت وطن",
+"لو أدري البعد يوجع، جان حضنتك عمر",
+"صوتك وطن واني بيه لاجئ"
+];
+
+// جلب الأشعار اللي انعرضت قبل
+let shown = JSON.parse(localStorage.getItem("shownPoems")) || [];
+
+function getPoem() {
+
+  // إذا خلصت الأشعار كلها
+  if (shown.length === poems.length) {
+    shown = [];
+  }
+
+  let remaining = poems.filter(p => !shown.includes(p));
+  let random = remaining[Math.floor(Math.random() * remaining.length)];
+
+  shown.push(random);
+  localStorage.setItem("shownPoems", JSON.stringify(shown));
+
+  document.getElementById("poem").innerText = random;
+}
+
+// أول تحميل
+getPoem();
+
+</script>
+
+</body>
+</html>
